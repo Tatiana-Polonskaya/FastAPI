@@ -3,10 +3,25 @@ from models import Achievement, Article
 from starlette import status
 from starlette.responses import Response
 from uuid import uuid4
+from fastapi.middleware.cors import CORSMiddleware
+
 
 import json
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 pathArticles = "data/articles.json"
 pathAchievements = "data/achievements.json"
