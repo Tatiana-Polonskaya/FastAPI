@@ -60,7 +60,7 @@ def create_article(article: Article):
     articles.append(newArticle)
     with open(pathArticles, "w") as f:
         json.dump(articles, f)
-    return newArticle
+    return {"message": "Article was added", "code":200 }
 
 @app.delete("/articles/{index}")
 def delete_article_by_index(index: str):
