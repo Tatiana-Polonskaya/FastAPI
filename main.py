@@ -1,10 +1,11 @@
 from fastapi import FastAPI, HTTPException
-from models import Achievement, Article
+from models import Achievement, Article, ArticleService
 from starlette import status
 from starlette.responses import Response
 from uuid import uuid4
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi import Body
+from starlette.requests import Request
 
 import json
 
@@ -23,6 +24,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+
 )
 
 pathArticles = "data/articles.json"
@@ -51,7 +53,7 @@ def get_article_by_index(index: str):
         raise HTTPException(status_code=404, detail="Article not found")
 
 @app.post("/articles/")
-def create_article(article: Article):
+def create_article(article:  Article):
     with open(pathArticles, "r") as f:
         articles = json.load(f)
     newArticle = article.dict()
@@ -60,7 +62,7 @@ def create_article(article: Article):
     articles.append(newArticle)
     with open(pathArticles, "w") as f:
         json.dump(articles, f)
-    return {"message": "Article was added", "code":200 }
+    return Response(status_code=status.HTTP_200_OK)
 
 @app.delete("/articles/{index}")
 def delete_article_by_index(index: str):
@@ -74,6 +76,18 @@ def delete_article_by_index(index: str):
         json.dump(articles, f)
     return {"message": "Article deleted"}
 
+
+@app.put("/articles/{index}")
+def put_article_by_index(index: str, item: Article):
+    with open(pathArticles, "r") as f:
+        articles = json.load(f)
+    try:
+        articles[articles.index(next(a for a in articles if a["index"] == index))] = item
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Article not found")
+    with open(pathArticles, "w") as f:
+        json.dump(articles, f)
+    return {"message": "Article updated"}
 
 
 @app.get("/achievements/")
