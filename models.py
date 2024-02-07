@@ -19,5 +19,5 @@ class Achievement(BaseModel):
     year: int
     date: str
     title: str
-    link: str | None
+    link: str 
     img: str
