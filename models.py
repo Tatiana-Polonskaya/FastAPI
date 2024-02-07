@@ -5,7 +5,7 @@ class Article(BaseModel):
     year: str
     conference: str
     status: int
-    link: str | None
+    link: str 
 
 class ArticleService(BaseModel):
     index: str
