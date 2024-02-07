@@ -82,7 +82,9 @@ def put_article_by_index(index: str, item: Article):
     with open(pathArticles, "r") as f:
         articles = json.load(f)
     try:
-        articles[articles.index(next(a for a in articles if a["index"] == index))] = item
+        editArticle = item.dict()
+        editArticle["id"] = index
+        articles[articles.index(next(a for a in articles if a["index"] == index))] = editArticle
     except ValueError:
         raise HTTPException(status_code=404, detail="Article not found")
     with open(pathArticles, "w") as f:
