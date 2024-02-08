@@ -1,1 +1,42 @@
-[{"title": "string", "year": 0, "conference": "string", "status": 0, "link": "string", "index": "984211ae-92ae-4064-97d1-878239823395"}, {"title": "string", "year": 0, "conference": "string", "status": 0, "link": "string", "index": "b911fb29-ea5a-48ae-8951-e2d9a12dbef7"}, {"title": "erfre", "year": "2024", "conference": "eferf", "status": 1, "link": "http://localhost:3000/articles/add", "index": "25c5a168-6dd8-4190-8415-e4f3e409e395"}, {"title": "erfre", "year": "2024", "conference": "eferf", "status": 1, "link": "http://localhost:3000/articles/add", "index": "e32dd2dd-c8a9-4915-9f1f-8a483737dc77"}, {"title": "e899rfre", "year": "2024", "conference": "eferf", "status": 1, "link": "http://localhost:3000/articles/add", "index": "06cdef7e-59b1-41de-a9bd-5b81dc613582"}, {"title": "scsc", "year": "2024", "conference": "scssss", "status": 0, "link": "", "index": "4150409e-217c-4317-a3d3-04f130e19841"}, {"title": "dfef", "year": "2024", "conference": "rfrfr", "status": 1, "link": "", "index": "28542a0a-2ba4-465d-b5d6-34f5e4133b06"}, {"title": "y6y", "year": "2024", "conference": "45", "status": 1, "link": "", "index": "8d0e6d78-fc7b-4682-9f7f-05a0bcd09e6f"}, {"title": "   mnm", "year": "2022", "conference": "nnnnnnn", "status": 1, "link": "", "index": "5fc77ac7-a68d-4066-85a5-e68f30d09579"}]
+[
+  {
+    "title": "FIRST ITEM",
+    "year": "2020",
+    "conference": "FIRST ROW",
+    "status": 0,
+    "link": "http://localhost:3000/",
+    "authors": "",
+    "index": "984211ae-92ae-4064-97d1-878239823395",
+    "indexation": 0
+  },
+  {
+    "title": "SECOND ROW",
+    "year": "2020",
+    "conference": "string",
+    "status": 1,
+    "link": "http://localhost:3000/",
+    "index": "b911fb29-ea5a-48ae-8951-e2d9a12dbef7",
+    "authors": "",
+    "indexation": 0
+  },
+  {
+    "title": "\u0442\u0440\u0435\u0442\u044c\u044f \u0441\u0442\u0440\u043e\u0447\u043a\u0430",
+    "year": "2024",
+    "conference": "eferf",
+    "status": 0,
+    "link": "http://localhost:3000/articles/add",
+    "authors": "",
+    "index": "25c5a168-6dd8-4190-8415-e4f3e409e395",
+    "indexation": 0
+  },
+  {
+    "title": "erfre",
+    "year": "2024",
+    "conference": "eferf",
+    "status": 1,
+    "link": "http://localhost:3000/articles/add",
+    "index": "e32dd2dd-c8a9-4915-9f1f-8a483737dc77",
+    "authors": "",
+    "indexation": 0
+  }
+]

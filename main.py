@@ -20,7 +20,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,6 +29,9 @@ app.add_middleware(
 
 pathArticles = "data/articles.json"
 pathAchievements = "data/achievements.json"
+pathIndexation = "data/indexation.json"
+
+encoding="UTF-8"
 
 @app.get("/")
 async def root():
@@ -37,53 +40,54 @@ async def root():
 
 @app.get("/articles/")
 def get_all_articles():
-    with open(pathArticles, "r") as f:
+    with open(pathArticles, "r", encoding=encoding) as f:
         articles = json.load(f)
     return articles
 
 
-@app.get("/articles/{index}")
-def get_article_by_index(index: str):
-    with open(pathArticles, "r") as f:
+@app.get("/articles/{id}")
+def get_article_by_index(id: str):
+    with open(pathArticles, "r", encoding=encoding) as f:
         articles = json.load(f)
     try:
-        article = next(a for a in articles if a["index"] == index)
+        print("id", id)
+        article = next(a for a in articles if a["index"] == id)
         return article
     except StopIteration:
         raise HTTPException(status_code=404, detail="Article not found")
 
 @app.post("/articles/")
 def create_article(article:  Article):
-    with open(pathArticles, "r") as f:
+    with open(pathArticles, "r", encoding=encoding) as f:
         articles = json.load(f)
     newArticle = article.dict()
     unique_id = str(uuid4())
     newArticle["index"] =unique_id
     articles.append(newArticle)
-    with open(pathArticles, "w") as f:
+    with open(pathArticles, "w", encoding=encoding) as f:
         json.dump(articles, f)
     return Response(status_code=status.HTTP_200_OK)
 
 @app.delete("/articles/{index}")
 def delete_article_by_index(index: str):
-    with open(pathArticles, "r") as f:
+    with open(pathArticles, "r", encoding=encoding) as f:
         articles = json.load(f)
     try:
         articles.remove(next(a for a in articles if a["index"] == index))
     except ValueError:
         raise HTTPException(status_code=404, detail="Article not found")
-    with open(pathArticles, "w") as f:
+    with open(pathArticles, "w", encoding=encoding) as f:
         json.dump(articles, f)
     return {"message": "Article deleted"}
 
 
 @app.put("/articles/{index}")
 def put_article_by_index(index: str, item: Article):
-    with open(pathArticles, "r") as f:
+    with open(pathArticles, "r", encoding=encoding) as f:
         articles = json.load(f)
     try:
         editArticle = item.dict()
-        editArticle["id"] = index
+        editArticle["index"] = index
         articles[articles.index(next(a for a in articles if a["index"] == index))] = editArticle
     except ValueError:
         raise HTTPException(status_code=404, detail="Article not found")
@@ -94,13 +98,13 @@ def put_article_by_index(index: str, item: Article):
 
 @app.get("/achievements/")
 def get_all_achievements():
-    with open(pathAchievements, "r") as f:
+    with open(pathAchievements, "r", encoding=encoding) as f:
         achievements = json.load(f)
     return achievements
 
 @app.get("/achievements/{index}")
 def get_achievement_by_year(index: str):
-    with open(pathAchievements, "r") as f:
+    with open(pathAchievements, "r", encoding=encoding) as f:
         achievements = json.load(f)
     try:
         achievement = next(a for a in achievements if a["index"] == index)
@@ -111,32 +115,36 @@ def get_achievement_by_year(index: str):
 
 @app.post("/achievements/")
 def create_achievement(achievement: Achievement):
-    with open(pathAchievements, "r") as f:
+    with open(pathAchievements, "r", encoding=encoding) as f:
         achievements = json.load(f)
     newAchienement = achievement.dict()
     unique_id = str(uuid4())
     newAchienement["index"] =unique_id
     achievements.append(newAchienement)
-    with open(pathAchievements, "w") as f:
+    with open(pathAchievements, "w", encoding=encoding) as f:
         json.dump(achievements, f)
     return newAchienement
 
 @app.delete("/achievements/{index}")
 def delete_achievement_by_index(index: str):
-    with open(pathAchievements, "r") as f:
+    with open(pathAchievements, "r", encoding=encoding) as f:
         achievements = json.load(f)
     try:
         achievements.remove(next(a for a in achievements if a["index"] == index))
     except ValueError:
         raise HTTPException(status_code=404, detail="Article not found")
-    with open(pathArticles, "w") as f:
+    with open(pathArticles, "w", encoding=encoding) as f:
         json.dump(achievements, f)
     return {"message": "Achievement deleted"}
 
-userlist = ["Spike","Jet","Ed","Faye","Ein"]
-@app.get("/userlist")
-async def userlist_(start: int = 0, limit: int = 10):
-    return userlist[start:start+limit]
+
+
+# --------------------------------------INDEXATION--------------------------------------
+@app.get("/indexations")
+async def get_all_indexations():
+    with open(pathIndexation, "r", encoding=encoding) as f:
+        indexations = json.load(f)
+    return indexations
 
 
 # @app.post("/lookup")
